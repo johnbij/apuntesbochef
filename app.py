@@ -62,8 +62,7 @@ if menu == "🏠 Dashboard":
 
     # ── PANTALLA INICIAL ─────────────────────────────────────────────────────
     if st.session_state.eje_actual is None:
-        st.markdown("### 📚 Unidades")
-
+        
         # CSS individual para cada botón de eje
         st.markdown("""
         <style>
