@@ -338,24 +338,6 @@ elif menu == "🐉 Bienvenida":
     </div>
     """, unsafe_allow_html=True)
 
-    # Ejes disponibles
-    st.markdown('<div class="seccion-titulo">📚 Contenidos del curso</div>', unsafe_allow_html=True)
-    c1, c2 = st.columns(2)
-    with c1:
-        st.markdown('<div class="card-eje" style="background:#c0392b;">🔢 DIM<br><small>ñoños</small></div>', unsafe_allow_html=True)
-        st.markdown('<div class="card-eje" style="background:#7b1fa2;">📐 Geometría<br><small>Figuras · Área y Volumen · Vectores</small></div>', unsafe_allow_html=True)
-    with c2:
-        st.markdown('<div class="card-eje" style="background:#1b5e20;">📉 Álgebra<br><small>Álgebra · Funciones</small></div>', unsafe_allow_html=True)
-        st.markdown('<div class="card-eje" style="background:#e65100;">📊 Datos y Azar<br><small>Estadística · Probabilidad</small></div>', unsafe_allow_html=True)
-
-    # Metodología
-    st.markdown('<div class="seccion-titulo">🛡️ Lo que hay en la página</div>', unsafe_allow_html=True)
-    st.markdown("""
-    <div style="background:#f9f9f9; border-radius:15px; padding:20px; line-height:2;">
-    
-    <span class="pill">📄 Material descargable</span>
-    </div>
-    """, unsafe_allow_html=True)
 
     # CTA
     st.write("")
