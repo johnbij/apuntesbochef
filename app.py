@@ -101,15 +101,6 @@ if menu == "🏠 Dashboard":
                 st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
 
-        st.write("")
-        col_iz, col_pdf, col_der = st.columns([1, 4, 1])
-        with col_pdf:
-            st.markdown('<div class="pdf-btn">', unsafe_allow_html=True)
-            if st.button("📄 Materiales descargables en PDF", key="m_pdf", use_container_width=True):
-                st.session_state.ir_a_pdf = True
-                st.rerun()
-            st.markdown('</div>', unsafe_allow_html=True)
-
     # ── DENTRO DE UN EJE ────────────────────────────────────────────────────
     else:
         # CSS para barra de navegación con colores por eje
