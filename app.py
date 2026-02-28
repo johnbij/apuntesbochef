@@ -11,7 +11,7 @@ from styles import aplicar_estilos
 # 1. CONFIGURACIÓN Y ESTADOS
 # =============================================================================
 
-st.set_page_config(page_title="Lagrangianitos Hub", page_icon="🐉", layout="wide")
+st.set_page_config(page_title="Los K Hub", page_icon="🐉", layout="wide")
 
 if 'eje_actual'         not in st.session_state: st.session_state.eje_actual         = None
 if 'subcat_actual'      not in st.session_state: st.session_state.subcat_actual      = None
@@ -41,7 +41,7 @@ aplicar_estilos()
 with st.sidebar:
     st.markdown("# 🚀 Perfil\n**Barton**")
     st.divider()
-    menu = st.radio("Ir a:", ["🐉 Bienvenida", "🏠 Dashboard PAES", "📂 Biblioteca de PDFs"])
+    menu = st.radio("Ir a:", ["🐉 Bienvenida", "🏠 Dashboard", "📂 Biblioteca de PDFs"])
     st.divider()
     st.write("Sólo existen dos días en el año en los que no se puede hacer nada... Dalai Lama")
 
@@ -49,7 +49,7 @@ with st.sidebar:
 # 4. DASHBOARD PRINCIPAL
 # =============================================================================
 
-if menu == "🏠 Dashboard PAES":
+if menu == "🏠 Dashboard":
 
     if st.session_state.cronometro_activo:
         st_autorefresh(interval=1000, limit=None, key="crono_refresh")
@@ -59,7 +59,7 @@ if menu == "🏠 Dashboard PAES":
 
     st.markdown(
         f'<div class="header-azul">'
-        f'<div class="titulo-header">🐉 Lagrangianitos. Tus recursos PAES M1</div>'
+        f'<div class="titulo-header">🐉 Lagrangianitos. Materiales en PDF</div>'
         f'<div class="info-header">📍 Santiago, Chile | 🕒 {ahora.strftime("%H:%M")}</div>'
         f'</div>',
         unsafe_allow_html=True
@@ -417,11 +417,11 @@ elif menu == "🐉 Bienvenida":
 
     <div class="bienvenida-hero">
         <div class="bienvenida-dragon">🐉</div>
-        <div class="bienvenida-titulo">LAGRANGIANITOS</div>
-        <div class="bienvenida-lema">"Enseñamos conceptos, no solo tricks"</div>
+        <div class="bienvenida-titulo">HUBdelosK</div>
+        <div class="bienvenida-lema">"xd"</div>
         <div class="bienvenida-sub">
-            Tu plataforma de preparación PAES M1.<br>
-            Matemática con profundidad, desde los fundamentos hasta la prueba.
+          Full apuntes.<br>
+            Pa que pasí tus cagas de ramos.
         </div>
     </div>
     """, unsafe_allow_html=True)
