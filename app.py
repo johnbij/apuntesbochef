@@ -319,7 +319,7 @@ elif menu == "🐉 Bienvenida":
 
     <div class="bienvenida-hero">
         <div class="bienvenida-dragon">🐉</div>
-        <div class="bienvenida-titulo">HUBdelosK</div>
+        <div class="bienvenida-titulo">HUB de los K</div>
         <div class="bienvenida-lema">"xd"</div>
         <div class="bienvenida-sub">
           Full apuntes.<br>
