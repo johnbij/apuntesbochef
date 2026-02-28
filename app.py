@@ -89,7 +89,7 @@ if menu == "🏠 Dashboard":
 
     # ── PANTALLA INICIAL ─────────────────────────────────────────────────────
     elif st.session_state.eje_actual is None:
-        st.markdown("### 📚 Selecciona un Eje Temático")
+        st.markdown("### 📚 Unidades")
 
         # CSS individual para cada botón de eje
         st.markdown("""
@@ -150,19 +150,19 @@ if menu == "🏠 Dashboard":
             st.markdown('</div>', unsafe_allow_html=True)
         with n_cols[1]:
             st.markdown('<div class="nav-n">', unsafe_allow_html=True)
-            if st.button("N", key="n_n", use_container_width=True): st.session_state.eje_actual = "🔢 Números";      st.session_state.subcat_actual = None; st.session_state.clase_seleccionada = None; st.rerun()
+            if st.button("N", key="n_n", use_container_width=True): st.session_state.eje_actual = "🔢 DIM";      st.session_state.subcat_actual = None; st.session_state.clase_seleccionada = None; st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
         with n_cols[2]:
             st.markdown('<div class="nav-a">', unsafe_allow_html=True)
-            if st.button("A", key="n_a", use_container_width=True): st.session_state.eje_actual = "📉 Álgebra";      st.session_state.subcat_actual = None; st.session_state.clase_seleccionada = None; st.rerun()
+            if st.button("A", key="n_a", use_container_width=True): st.session_state.eje_actual = "📉 DFI";      st.session_state.subcat_actual = None; st.session_state.clase_seleccionada = None; st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
         with n_cols[3]:
             st.markdown('<div class="nav-g">', unsafe_allow_html=True)
-            if st.button("G", key="n_g", use_container_width=True): st.session_state.eje_actual = "📐 Geometría";    st.session_state.subcat_actual = None; st.session_state.clase_seleccionada = None; st.rerun()
+            if st.button("G", key="n_g", use_container_width=True): st.session_state.eje_actual = "📐 DII";    st.session_state.subcat_actual = None; st.session_state.clase_seleccionada = None; st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
         with n_cols[4]:
             st.markdown('<div class="nav-d">', unsafe_allow_html=True)
-            if st.button("D", key="n_d", use_container_width=True): st.session_state.eje_actual = "📊 Datos y Azar"; st.session_state.subcat_actual = None; st.session_state.clase_seleccionada = None; st.rerun()
+            if st.button("D", key="n_d", use_container_width=True): st.session_state.eje_actual = "📊 DCC"; st.session_state.subcat_actual = None; st.session_state.clase_seleccionada = None; st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
 
         st.write("---")
