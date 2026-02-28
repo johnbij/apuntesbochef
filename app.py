@@ -52,7 +52,7 @@ if menu == "🏠 Dashboard":
 
     st.markdown(
         f'<div class="header-azul">'
-        f'<div class="titulo-header">🐉 Hub de los K. Materiales en PDF</div>'
+        f'<div class="titulo-header">🐉 Materiales en PDF</div>'
         f'<div class="info-header">📍 Santiago, Chile | 🕒 {ahora.strftime("%H:%M")}</div>'
         f'</div>',
         unsafe_allow_html=True
