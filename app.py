@@ -41,7 +41,7 @@ aplicar_estilos()
 with st.sidebar:
     st.markdown("# 🚀 Perfil\n**Bij**")
     st.divider()
-    menu = st.radio("Ir a:", ["🐉 Bienvenida", "🏠 Dashboard", "📂 Biblioteca de PDFs"])
+    menu = st.radio("Ir a:", ["🐉 Bienvenida", "🏠 Dashboard"])
     st.divider()
     st.write("Sólo existen dos días en el año en los que no se puede hacer nada... Dalai Lama")
 
@@ -79,13 +79,6 @@ if menu == "🏠 Dashboard":
 
     st.write("")
 
-    # ── SECCIÓN PDF ──────────────────────────────────────────────────────────
-    if st.session_state.get('ir_a_pdf'):
-        st.session_state.ir_a_pdf = False
-        st.header("📂 Biblioteca de Recursos en PDF")
-        st.info("🚀 Aquí irán los materiales descargables. Próximamente.")
-        if st.button("🔙 Volver al inicio", key="volver_pdf"):
-            st.rerun()
 
     # ── PANTALLA INICIAL ─────────────────────────────────────────────────────
     elif st.session_state.eje_actual is None:
