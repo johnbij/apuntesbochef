@@ -1,15 +1,29 @@
 import streamlit as st
 from datetime import datetime
 import pytz
+import os
 
-from contenidos import CONTENIDOS
-from styles import aplicar_estilos
+# Intenta importar los módulos locales, si fallan, define dummies para que el código corra
+try:
+    from contenidos import CONTENIDOS
+except ImportError:
+    CONTENIDOS = {}
+    st.warning("No se pudo encontrar el módulo 'contenidos'. Usando datos vacíos.")
+
+try:
+    from styles import aplicar_estilos
+except ImportError:
+    def aplicar_estilos():
+        pass
+    st.warning("No se pudo encontrar el módulo 'styles'. Estilos por defecto aplicados.")
+
 
 # =============================================================================
 # 1. CONFIGURACIÓN Y ESTADOS
 # =============================================================================
 
-st.set_page_config(page_title="El Hub de los K", page_icon="🐉", layout="wide")
+# Actualizado el icono de la página a un cohete para que coincida con la nueva imagen
+st.set_page_config(page_title="El Hub de los K", page_icon="🚀", layout="wide")
 
 if 'eje_actual'         not in st.session_state: st.session_state.eje_actual         = None
 if 'subcat_actual'      not in st.session_state: st.session_state.subcat_actual      = None
@@ -35,9 +49,11 @@ aplicar_estilos()
 # =============================================================================
 
 with st.sidebar:
+    # Actualizado el icono en el perfil también
     st.markdown("# 🚀 Perfil\n**Bij**")
     st.divider()
-    menu = st.radio("Ir a:", ["🐉 Bienvenida", "🏠 Dashboard"])
+    # Actualizado el icono del menú de bienvenida
+    menu = st.radio("Ir a:", ["🚀 Bienvenida", "🏠 Dashboard"])
     st.divider()
     st.write("Sólo existen dos días en el año en los que no se puede hacer nada... Dalai Lama")
 
@@ -50,9 +66,10 @@ if menu == "🏠 Dashboard":
     zona_cl = pytz.timezone('America/Santiago')
     ahora = datetime.now(zona_cl)
 
+    # Actualizado el icono en la cabecera del dashboard
     st.markdown(
         f'<div class="header-azul">'
-        f'<div class="titulo-header">🐉 Materiales en PDF</div>'
+        f'<div class="titulo-header">🚀 Materiales en PDF</div>'
         f'<div class="info-header">📍 Santiago, Chile | 🕒 {ahora.strftime("%H:%M")}</div>'
         f'</div>',
         unsafe_allow_html=True
@@ -256,83 +273,58 @@ if menu == "🏠 Dashboard":
             st.write("---")
 
             # Contenido de la clase
-            if clase:
+            if clase and "render" in clase:
                 clase["render"]()
             else:
-                st.warning(f"Clase {codigo} no encontrada.")
+                st.warning(f"Clase {codigo} no encontrada o no tiene función de renderizado.")
 
             # Barra ABAJO
             st.write("---")
             barra_navegacion("bot")
 
-elif menu == "🐉 Bienvenida":
-    st.markdown("""
-    <style>
-    .bienvenida-hero {
-        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-        border-radius: 20px;
-        padding: 50px 30px;
-        text-align: center;
-        color: white;
-        margin-bottom: 30px;
-    }
-    .bienvenida-dragon { font-size: 80px; margin-bottom: 10px; }
-    .bienvenida-titulo { font-size: 36px; font-weight: 900; letter-spacing: 2px; margin-bottom: 8px; }
-    .bienvenida-lema {
-        font-size: 20px;
-        color: #f0c040;
-        font-style: italic;
-        font-weight: bold;
-        margin-bottom: 20px;
-    }
-    .bienvenida-sub { font-size: 15px; opacity: 0.8; max-width: 500px; margin: 0 auto; }
+# =============================================================================
+# 5. SECCIÓN DE BIENVENIDA (ACTUALIZADA CON IMAGEN)
+# =============================================================================
 
-    .card-eje {
-        border-radius: 15px;
-        padding: 20px;
-        text-align: center;
-        color: white;
-        font-weight: bold;
-        font-size: 16px;
-        margin-bottom: 10px;
-    }
+elif menu == "🚀 Bienvenida":
+    
+    # Ruta de la imagen (asumiendo que está en la misma carpeta que el script)
+    img_path = "hub_image.png"
 
-    .seccion-titulo {
-        font-size: 22px;
-        font-weight: bold;
-        color: #1a1a2e;
-        border-left: 5px solid #c0392b;
-        padding-left: 12px;
-        margin: 30px 0 15px 0;
-    }
-
-    .pill {
-        display: inline-block;
-        background: #f0f0f0;
-        border-radius: 20px;
-        padding: 6px 16px;
-        margin: 4px;
-        font-size: 14px;
-        color: #333;
-    }
-    </style>
-
-    <div class="bienvenida-hero">
-        <div class="bienvenida-dragon">🐉</div>
-        <div class="bienvenida-titulo">HUB de los K</div>
-        <div class="bienvenida-lema">"8=D"</div>
-        <div class="bienvenida-sub">
-          Full apuntes.<br>
-            Pa que pasí tus cagas de ramos.
+    if os.path.exists(img_path):
+        # Crear columnas para centrar la imagen
+        col_img_iz, col_img_centro, col_img_der = st.columns([1, 2, 1])
+        
+        with col_img_centro:
+            # Estilo CSS para redondear las esquinas de la imagen de Streamlit
+            st.markdown("""
+            <style>
+            [data-testid="stImage"] img {
+                border-radius: 20px;
+            }
+            </style>
+            """, unsafe_allow_html=True)
+            
+            # Mostrar la imagen
+            st.image(img_path, use_container_width=True)
+    else:
+        st.error(f"No se pudo encontrar la imagen en la ruta: {img_path}. Asegúrate de haber guardado el archivo 'hub_image.png' en la misma carpeta que este script.")
+        # Fallback al texto antiguo si la imagen no existe
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); border-radius: 20px; padding: 50px 30px; text-align: center; color: white;">
+            <div style="font-size: 80px; margin-bottom: 10px;">🐉</div>
+            <div style="font-size: 36px; font-weight: 900; letter-spacing: 2px; margin-bottom: 8px;">HUB de los K</div>
+            <div style="font-size: 20px; color: #f0c040; font-style: italic; font-weight: bold; margin-bottom: 20px;">"8=D"</div>
+            <div style="font-size: 15px; opacity: 0.8; max-width: 500px; margin: 0 auto;">Full apuntes.<br>Pa que pasí tus cagas de ramos.</div>
         </div>
-    </div>
-    """, unsafe_allow_html=True)
-
+        """, unsafe_allow_html=True)
 
     # CTA
+    st.write("")
     st.write("")
     col_iz, col_cta, col_der = st.columns([1, 2, 1])
     with col_cta:
         if st.button("🚀 Ir al Dashboard", key="cta_dashboard", use_container_width=True):
             st.session_state.bienvenida_vista = True
-            st.success("¡Usa el menú lateral para ir al Dashboard PAES! 👈")
+            # Mensaje actualizado
+            st.success("¡Usa el menú lateral para navegar por los materiales! 👈")
