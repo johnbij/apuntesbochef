@@ -11,7 +11,7 @@ from styles import aplicar_estilos
 # 1. CONFIGURACIÓN Y ESTADOS
 # =============================================================================
 
-st.set_page_config(page_title="Los K Hub", page_icon="🐉", layout="wide")
+st.set_page_config(page_title="El Hub de los K", page_icon="🐉", layout="wide")
 
 if 'eje_actual'         not in st.session_state: st.session_state.eje_actual         = None
 if 'subcat_actual'      not in st.session_state: st.session_state.subcat_actual      = None
@@ -59,7 +59,7 @@ if menu == "🏠 Dashboard":
 
     st.markdown(
         f'<div class="header-azul">'
-        f'<div class="titulo-header">🐉 Lagrangianitos. Materiales en PDF</div>'
+        f'<div class="titulo-header">🐉 Hub de los K. Materiales en PDF</div>'
         f'<div class="info-header">📍 Santiago, Chile | 🕒 {ahora.strftime("%H:%M")}</div>'
         f'</div>',
         unsafe_allow_html=True
@@ -150,39 +150,23 @@ if menu == "🏠 Dashboard":
             st.markdown('</div>', unsafe_allow_html=True)
         with n_cols[1]:
             st.markdown('<div class="nav-n">', unsafe_allow_html=True)
-            if st.button("N", key="n_n", use_container_width=True): st.session_state.eje_actual = "🔢 DIM";      st.session_state.subcat_actual = None; st.session_state.clase_seleccionada = None; st.rerun()
+            if st.button("DIM", key="n_n", use_container_width=True): st.session_state.eje_actual = "🔢 DIM";      st.session_state.subcat_actual = None; st.session_state.clase_seleccionada = None; st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
         with n_cols[2]:
             st.markdown('<div class="nav-a">', unsafe_allow_html=True)
-            if st.button("A", key="n_a", use_container_width=True): st.session_state.eje_actual = "📉 DFI";      st.session_state.subcat_actual = None; st.session_state.clase_seleccionada = None; st.rerun()
+            if st.button("DFI", key="n_a", use_container_width=True): st.session_state.eje_actual = "📉 DFI";      st.session_state.subcat_actual = None; st.session_state.clase_seleccionada = None; st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
         with n_cols[3]:
             st.markdown('<div class="nav-g">', unsafe_allow_html=True)
-            if st.button("G", key="n_g", use_container_width=True): st.session_state.eje_actual = "📐 DII";    st.session_state.subcat_actual = None; st.session_state.clase_seleccionada = None; st.rerun()
+            if st.button("DII", key="n_g", use_container_width=True): st.session_state.eje_actual = "📐 DII";    st.session_state.subcat_actual = None; st.session_state.clase_seleccionada = None; st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
         with n_cols[4]:
             st.markdown('<div class="nav-d">', unsafe_allow_html=True)
-            if st.button("D", key="n_d", use_container_width=True): st.session_state.eje_actual = "📊 DCC"; st.session_state.subcat_actual = None; st.session_state.clase_seleccionada = None; st.rerun()
+            if st.button("DCC", key="n_d", use_container_width=True): st.session_state.eje_actual = "📊 DCC"; st.session_state.subcat_actual = None; st.session_state.clase_seleccionada = None; st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
 
         st.write("---")
 
-        # Cronómetro
-        with st.container(border=True):
-            col_btn, col_crono = st.columns([1, 2])
-            with col_btn:
-                if not st.session_state.cronometro_activo:
-                    if st.button("▶️ Iniciar", key="btn_start_crono"):
-                        st.session_state.tiempo_inicio = time.time(); st.session_state.cronometro_activo = True; st.rerun()
-                else:
-                    if st.button("⏹️ Detener", key="btn_stop_crono"):
-                        st.session_state.cronometro_activo = False; st.rerun()
-            with col_crono:
-                if st.session_state.cronometro_activo and st.session_state.tiempo_inicio:
-                    secs = int(time.time() - st.session_state.tiempo_inicio)
-                    st.markdown(f'<span class="crono-digital">{secs//60:02d}:{secs%60:02d}</span>', unsafe_allow_html=True)
-                else:
-                    st.markdown('<span class="crono-digital" style="opacity:0.2;">00:00</span>', unsafe_allow_html=True)
 
         # ── NAVEGACIÓN ───────────────────────────────────────────────────────
         eje      = st.session_state.eje_actual
