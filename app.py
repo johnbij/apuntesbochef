@@ -342,7 +342,7 @@ elif menu == "🐉 Bienvenida":
     st.markdown('<div class="seccion-titulo">📚 Contenidos del curso</div>', unsafe_allow_html=True)
     c1, c2 = st.columns(2)
     with c1:
-        st.markdown('<div class="card-eje" style="background:#c0392b;">🔢 Números<br><small>Conjuntos · Operatoria · Razones</small></div>', unsafe_allow_html=True)
+        st.markdown('<div class="card-eje" style="background:#c0392b;">🔢 DIM<br><small>ñoños</small></div>', unsafe_allow_html=True)
         st.markdown('<div class="card-eje" style="background:#7b1fa2;">📐 Geometría<br><small>Figuras · Área y Volumen · Vectores</small></div>', unsafe_allow_html=True)
     with c2:
         st.markdown('<div class="card-eje" style="background:#1b5e20;">📉 Álgebra<br><small>Álgebra · Funciones</small></div>', unsafe_allow_html=True)
