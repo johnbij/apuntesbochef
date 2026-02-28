@@ -39,7 +39,7 @@ aplicar_estilos()
 # =============================================================================
 
 with st.sidebar:
-    st.markdown("# 🚀 Perfil\n**Barton**")
+    st.markdown("# 🚀 Perfil\n**Bij**")
     st.divider()
     menu = st.radio("Ir a:", ["🐉 Bienvenida", "🏠 Dashboard", "📂 Biblioteca de PDFs"])
     st.divider()
@@ -104,20 +104,20 @@ if menu == "🏠 Dashboard":
         c1, c2 = st.columns(2)
         with c1:
             st.markdown('<div class="eje-n">', unsafe_allow_html=True)
-            if st.button("🔢 Números",   key="m_n", use_container_width=True): st.session_state.eje_actual = "🔢 Números"; st.rerun()
+            if st.button("🔢 DIM",   key="m_n", use_container_width=True): st.session_state.eje_actual = "🔢 DIM"; st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
         with c2:
             st.markdown('<div class="eje-a">', unsafe_allow_html=True)
-            if st.button("📉 Álgebra",   key="m_a", use_container_width=True): st.session_state.eje_actual = "📉 Álgebra"; st.rerun()
+            if st.button("📉 DFI",   key="m_a", use_container_width=True): st.session_state.eje_actual = "📉 DFI"; st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
         c3, c4 = st.columns(2)
         with c3:
             st.markdown('<div class="eje-g">', unsafe_allow_html=True)
-            if st.button("📐 Geometría", key="m_g", use_container_width=True): st.session_state.eje_actual = "📐 Geometría"; st.rerun()
+            if st.button("📐 DII", key="m_g", use_container_width=True): st.session_state.eje_actual = "📐 DII"; st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
         with c4:
             st.markdown('<div class="eje-d">', unsafe_allow_html=True)
-            if st.button("📊 Datos y Azar", key="m_d", use_container_width=True): st.session_state.eje_actual = "📊 Datos y Azar"; st.rerun()
+            if st.button("📊 DCC", key="m_d", use_container_width=True): st.session_state.eje_actual = "📊 DCC"; st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
 
         st.write("")
@@ -437,13 +437,10 @@ elif menu == "🐉 Bienvenida":
         st.markdown('<div class="card-eje" style="background:#e65100;">📊 Datos y Azar<br><small>Estadística · Probabilidad</small></div>', unsafe_allow_html=True)
 
     # Metodología
-    st.markdown('<div class="seccion-titulo">🛡️ Nuestra metodología</div>', unsafe_allow_html=True)
+    st.markdown('<div class="seccion-titulo">🛡️ Lo que hay en la página</div>', unsafe_allow_html=True)
     st.markdown("""
     <div style="background:#f9f9f9; border-radius:15px; padding:20px; line-height:2;">
-    <span class="pill">📖 Clases con historia y contexto</span>
-    <span class="pill">📊 Visualizaciones interactivas</span>
-    <span class="pill">🧠 Profundidad conceptual</span>
-    <span class="pill">📝 Ejercitación dirigida</span>
+    
     <span class="pill">⏱️ Cronómetro de estudio</span>
     <span class="pill">📄 Material descargable</span>
     </div>
