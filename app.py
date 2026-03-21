@@ -13,7 +13,7 @@ try:
     from styles import apply_styles
     from utils import mostrar_seccion_ramo 
     from ejercicios_python import EJERCICIOS
-    from pomodoro import POMODORO_HTML
+    from pomodoro import render_pomodoro
     from gallery import render_drive_gallery
 except ImportError as e:
     st.error(f"Error importando módulos: {e}")
