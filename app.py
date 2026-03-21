@@ -7,27 +7,30 @@ import pytz
 import streamlit as st
 import streamlit.components.v1 as components
 
-# Importaciones de tus utilidades de Drive y estilos
-from drive_utils import upload_to_drive, list_drive_uploads, fetch_audio_bytes, list_gallery_images
-from styles import apply_styles # Asumiendo que esta es la que configuramos antes
-from mono_b64 import MONO_DATA_URI
-from utils import download_button, mostrar_seccion_ramo 
-from ejercicios_python import EJERCICIOS
-from pomodoro import POMODORO_HTML
-from gallery import render_gallery, render_drive_gallery
+# 1. IMPORTACIONES DE TUS MÓDULOS (Con manejo de errores para evitar caídas)
+try:
+    from drive_utils import upload_to_drive, list_drive_uploads, fetch_audio_bytes, list_gallery_images
+    from styles import apply_styles
+    from utils import mostrar_seccion_ramo 
+    from ejercicios_python import EJERCICIOS
+    from pomodoro import POMODORO_HTML
+    from gallery import render_drive_gallery
+except ImportError as e:
+    st.error(f"Error importando módulos: {e}")
+    st.stop()
 
 # =============================================================================
-# 1. CONFIGURACIÓN Y ESTADOS
+# 2. CONFIGURACIÓN Y ESTADOS
 # =============================================================================
 
-st.set_page_config(page_title="Ferran Files", page_icon="📚", layout="wide")
+st.set_page_config(page_title="Ferran Files", page_icon="🚀", layout="wide")
 
 if "seccion" not in st.session_state:
     st.session_state.seccion = "recientes"
 if "tema" not in st.session_state:
     st.session_state.tema = "claro"
 
-# Configuración de Secciones de Drive
+# Diccionarios de configuración (Aquí estaba el SyntaxError, asegúrate de las llaves)
 SECCIONES_DRIVE = {
     "ics111": "📘 ICS111",
     "ics161": "📗 ICS161",
@@ -38,14 +41,14 @@ SECCIONES_DRIVE = {
 GALLERY_SECTIONS = {
     "gal_ics111": "Fotos ICS111",
     "gal_ics161": "Fotos ICS161",
-    "gal_mate10": "Fotos MATE10",
+    "gal_mate10": "Fotos MATE10"
 }
 
 MAX_UPLOAD_BYTES = 100 * 1024 * 1024
 DEFAULT_MIMETYPE = "application/octet-stream"
 
 # =============================================================================
-# 2. HEADER Y ESTILOS
+# 3. HEADER Y ESTILOS
 # =============================================================================
 apply_styles()
 
@@ -61,7 +64,7 @@ st.markdown(
 )
 
 # =============================================================================
-# 3. BARRA DE NAVEGACIÓN (Layout de Botones)
+# 4. BARRA DE NAVEGACIÓN
 # =============================================================================
 col_nav = st.columns(6)
 with col_nav[0]: 
@@ -77,52 +80,35 @@ with col_nav[4]:
 with col_nav[5]: 
     if st.button("🖼️ Galerías"): st.session_state.seccion = "galerias"
 
-st.markdown("---")
+st.write("---")
 
 # =============================================================================
-# 4. LÓGICA DE SUBIDA (Siempre visible arriba o en sección específica)
-# =============================================================================
-with st.expander("⬆️ Subir Archivos a Drive", expanded=False):
-    seccion_label = st.selectbox("📍 Selecciona Destino:", options=list(SECCIONES_DRIVE.values()))
-    # Invertir el dict para sacar la key
-    dest_key = [k for k, v in SECCIONES_DRIVE.items() if v == seccion_label][0]
-    
-    uploaded_files = st.file_uploader("Arrastra aquí tus archivos", accept_multiple_files=True)
-    if uploaded_files and st.button("📤 Confirmar Subida"):
-        for f in uploaded_files:
-            mimetype = f.type or DEFAULT_MIMETYPE
-            success = upload_to_drive(f.read(), f.name, mimetype, folder_name=dest_key)
-            if success: st.success(f"✅ {f.name} subido.")
-            else: st.error(f"❌ Error en {f.name}")
-        st.rerun()
-
-# =============================================================================
-# 5. RENDERIZADO DE CONTENIDO
+# 5. LÓGICA DE RENDERIZADO
 # =============================================================================
 
 sec = st.session_state.seccion
 
 # --- SECCIONES DE RAMOS Y BEUCHEF ---
-if sec in SECCIONES_DRIVE.keys():
+if sec in SECCIONES_DRIVE:
     st.subheader(f"📑 {SECCIONES_DRIVE[sec]}")
     mostrar_seccion_ramo(sec)
 
-# --- RECIENTES ---
+# --- RECIENTES (CON SUBIDA) ---
 elif sec == "recientes":
-    st.subheader("📥 Archivos Recién Subidos")
-    archivos = list_drive_uploads()
-    if archivos:
-        for f in archivos:
-            col_a, col_b = st.columns([4, 1])
-            col_a.write(f"📄 {f['name']}")
-            url = f"https://drive.google.com/uc?export=download&id={f['id']}"
-            col_b.markdown(f"[⬇️ Descargar]({url})")
-    else:
-        st.info("No hay archivos nuevos.")
+    st.subheader("⬆️ Subir Archivos a Drive")
+    dest_label = st.selectbox("📍 Selecciona Destino:", options=list(SECCIONES_DRIVE.values()))
+    dest_key = [k for k, v in SECCIONES_DRIVE.items() if v == dest_label][0]
+    
+    uploaded_files = st.file_uploader("Sube material aquí", accept_multiple_files=True)
+    if uploaded_files and st.button("📤 Confirmar Subida"):
+        for f in uploaded_files:
+            upload_to_drive(f.read(), f.name, f.type or DEFAULT_MIMETYPE, folder_name=dest_key)
+        st.success("¡Archivos subidos!")
+        st.rerun()
 
 # --- GALERÍAS ---
 elif sec == "galerias":
-    st.subheader("📸 Galerías de Fotos")
+    st.subheader("📸 Galerías")
     gcol = st.columns(3)
     if gcol[0].button("Fotos ICS111"): st.session_state.seccion = "gal_ics111"
     if gcol[1].button("Fotos ICS161"): st.session_state.seccion = "gal_ics161"
