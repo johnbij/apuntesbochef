@@ -1,36 +1,26 @@
-
-import os
 import streamlit as st
-
-def list_pdfs(folder_path):
-    """Lista todos los archivos PDF en una carpeta específica."""
-    if not os.path.exists(folder_path):
-        return []
-    return [f for f in os.listdir(folder_path) if f.endswith('.pdf')]
-
-def download_button(file_path, file_name):
-    """Genera un botón de descarga para un archivo."""
-    try:
-        with open(file_path, "rb") as f:
-            pdf_bytes = f.read()
-        st.download_button(
-            label=f"📥 {file_name}",
-            data=pdf_bytes,
-            file_name=file_name,
-            mime="application/pdf",
-            key=file_path 
-        )
-    except Exception as e:
-        st.error(f"Error al cargar {file_name}")
+from drive_utils import list_drive_uploads
 
 def mostrar_seccion_ramo(nombre_ramo):
-    """Automatiza la búsqueda y despliegue de PDFs en la sección correspondiente."""
-    path_ramo = f"pdfs/{nombre_ramo}"
-    pdfs = list_pdfs(path_ramo)
+    """Lista archivos desde Google Drive y permite visualizarlos o descargarlos."""
+    st.info(f"Cargando archivos de {nombre_ramo} desde Drive...")
+    archivos = list_drive_uploads(nombre_ramo)
     
-    if pdfs:
-        for archivo in pdfs:
-            ruta_completa = os.path.join(path_ramo, archivo)
-            download_button(ruta_completa, archivo)
+    if archivos:
+        for f in archivos:
+            col1, col2 = st.columns([3, 1])
+            with col1:
+                st.write(f"📄 {f['name']}")
+            with col2:
+                # Link de descarga directa
+                url_descarga = f"https://drive.google.com/uc?export=download&id={f['id']}"
+                st.markdown(f"[⬇️ Descargar]({url_descarga})")
+            
+            # Visor embebido para PDFs
+            if f['mimeType'] == 'application/pdf':
+                with st.expander(f"👁️ Ver {f['name']}"):
+                    pdf_url = f"https://drive.google.com/viewerng/viewer?embedded=true&url=https://drive.google.com/uc?export=view&id={f['id']}"
+                    st.components.v1.iframe(pdf_url, height=600, scrolling=True)
+            st.write("---")
     else:
-        st.info(f"Aún no hay archivos en {nombre_ramo}.")
+        st.info(f"Aún no hay archivos en la carpeta de Drive para {nombre_ramo}.")
