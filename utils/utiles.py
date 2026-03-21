@@ -1,4 +1,6 @@
 import streamlit as st
+from datetime import datetime
+import pytz
 
 
 def render_proximamente(codigo):
@@ -81,3 +83,18 @@ def render_multiple_choice_quiz(questions, key_prefix):
 
         if i < len(questions):
             st.markdown("---")
+
+
+def hora_santiago() -> str:
+    """Retorna la hora actual en Santiago de Chile formateada como HH:MM."""
+    zona_cl = pytz.timezone("America/Santiago")
+    return datetime.now(zona_cl).strftime("%H:%M")
+
+
+def badge(texto: str, color: str = "#3b71ca") -> str:
+    """Retorna HTML de un badge con el texto y color dados."""
+    return (
+        f'<span style="background:{color};color:white;padding:3px 10px;'
+        f'border-radius:12px;font-size:13px;font-weight:bold;">{texto}</span>'
+    )
+
