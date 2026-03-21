@@ -1,30 +1,38 @@
-# ── DIM ──────────────────────────────────────────────────────
-from clases.dim.dm01 import render_DM01
-from clases.dim.dm02 import render_DM02
-from clases.dim.dm03 import render_DM03
-from clases.dim.dm04 import render_DM04
-from clases.dim.dm05 import render_DM05
+# ── DIM · Cálculo ────────────────────────────────────────────
+from clases.dim.calculo.c01 import render_C01
+from clases.dim.calculo.c02 import render_C02
+from clases.dim.calculo.c03 import render_C03
 
-# ── DFI ──────────────────────────────────────────────────────
-from clases.dfi.df01 import render_DF01
-from clases.dfi.df02 import render_DF02
-from clases.dfi.df03 import render_DF03
-from clases.dfi.df04 import render_DF04
-from clases.dfi.df05 import render_DF05
+# ── DIM · Álgebra Lineal ────────────────────────────────────
+from clases.dim.algebra_lineal.al01 import render_AL01
+from clases.dim.algebra_lineal.al02 import render_AL02
 
-# ── DII ──────────────────────────────────────────────────────
-from clases.dii.di01 import render_DI01
-from clases.dii.di02 import render_DI02
-from clases.dii.di03 import render_DI03
-from clases.dii.di04 import render_DI04
-from clases.dii.di05 import render_DI05
+# ── DFI · Mecánica ──────────────────────────────────────────
+from clases.dfi.mecanica.m01 import render_M01
+from clases.dfi.mecanica.m02 import render_M02
+from clases.dfi.mecanica.m03 import render_M03
 
-# ── DCC ──────────────────────────────────────────────────────
-from clases.dcc.dc01 import render_DC01
-from clases.dcc.dc02 import render_DC02
-from clases.dcc.dc03 import render_DC03
-from clases.dcc.dc04 import render_DC04
-from clases.dcc.dc05 import render_DC05
+# ── DFI · Electromagnetismo ─────────────────────────────────
+from clases.dfi.electromagnetismo.em01 import render_EM01
+from clases.dfi.electromagnetismo.em02 import render_EM02
+
+# ── DII · Optimización ──────────────────────────────────────
+from clases.dii.optimizacion.op01 import render_OP01
+from clases.dii.optimizacion.op02 import render_OP02
+from clases.dii.optimizacion.op03 import render_OP03
+
+# ── DII · Estadística ───────────────────────────────────────
+from clases.dii.estadistica.est01 import render_EST01
+from clases.dii.estadistica.est02 import render_EST02
+
+# ── DCC · Algoritmos ────────────────────────────────────────
+from clases.dcc.algoritmos.ag01 import render_AG01
+from clases.dcc.algoritmos.ag02 import render_AG02
+from clases.dcc.algoritmos.ag03 import render_AG03
+
+# ── DCC · Programación ──────────────────────────────────────
+from clases.dcc.programacion.pg01 import render_PG01
+from clases.dcc.programacion.pg02 import render_PG02
 
 from utils import render_proximamente
 
@@ -33,13 +41,13 @@ CONTENIDOS = {
         "color_subcats": "rojo",
         "subcategorias": {
             "Cálculo": {
-                "DM01": {"label": "📖 DM01: Próximamente", "render": render_DM01},
-                "DM02": {"label": "📖 DM02: Próximamente", "render": render_DM02},
-                "DM03": {"label": "📖 DM03: Próximamente", "render": render_DM03},
+                "C01": {"label": "📖 C01: Próximamente", "render": render_C01},
+                "C02": {"label": "📖 C02: Próximamente", "render": render_C02},
+                "C03": {"label": "📖 C03: Próximamente", "render": render_C03},
             },
             "Álgebra Lineal": {
-                "DM04": {"label": "📖 DM04: Próximamente", "render": render_DM04},
-                "DM05": {"label": "📖 DM05: Próximamente", "render": render_DM05},
+                "AL01": {"label": "📖 AL01: Próximamente", "render": render_AL01},
+                "AL02": {"label": "📖 AL02: Próximamente", "render": render_AL02},
             },
             "Ejercitación": {
                 "DME01": {"label": "📝 DME01: Próximamente", "render": lambda: render_proximamente("DME01")},
@@ -51,13 +59,13 @@ CONTENIDOS = {
         "color_subcats": "verde",
         "subcategorias": {
             "Mecánica": {
-                "DF01": {"label": "📖 DF01: Próximamente", "render": render_DF01},
-                "DF02": {"label": "📖 DF02: Próximamente", "render": render_DF02},
-                "DF03": {"label": "📖 DF03: Próximamente", "render": render_DF03},
+                "M01": {"label": "📖 M01: Próximamente", "render": render_M01},
+                "M02": {"label": "📖 M02: Próximamente", "render": render_M02},
+                "M03": {"label": "📖 M03: Próximamente", "render": render_M03},
             },
             "Electromagnetismo": {
-                "DF04": {"label": "📖 DF04: Próximamente", "render": render_DF04},
-                "DF05": {"label": "📖 DF05: Próximamente", "render": render_DF05},
+                "EM01": {"label": "📖 EM01: Próximamente", "render": render_EM01},
+                "EM02": {"label": "📖 EM02: Próximamente", "render": render_EM02},
             },
             "Ejercitación": {
                 "DFE01": {"label": "📝 DFE01: Próximamente", "render": lambda: render_proximamente("DFE01")},
@@ -69,13 +77,13 @@ CONTENIDOS = {
         "color_subcats": "morado",
         "subcategorias": {
             "Optimización": {
-                "DI01": {"label": "📖 DI01: Próximamente", "render": render_DI01},
-                "DI02": {"label": "📖 DI02: Próximamente", "render": render_DI02},
-                "DI03": {"label": "📖 DI03: Próximamente", "render": render_DI03},
+                "OP01": {"label": "📖 OP01: Próximamente", "render": render_OP01},
+                "OP02": {"label": "📖 OP02: Próximamente", "render": render_OP02},
+                "OP03": {"label": "📖 OP03: Próximamente", "render": render_OP03},
             },
             "Estadística": {
-                "DI04": {"label": "📖 DI04: Próximamente", "render": render_DI04},
-                "DI05": {"label": "📖 DI05: Próximamente", "render": render_DI05},
+                "EST01": {"label": "📖 EST01: Próximamente", "render": render_EST01},
+                "EST02": {"label": "📖 EST02: Próximamente", "render": render_EST02},
             },
             "Ejercitación": {
                 "DIE01": {"label": "📝 DIE01: Próximamente", "render": lambda: render_proximamente("DIE01")},
@@ -87,13 +95,13 @@ CONTENIDOS = {
         "color_subcats": "naranja",
         "subcategorias": {
             "Algoritmos": {
-                "DC01": {"label": "📖 DC01: Próximamente", "render": render_DC01},
-                "DC02": {"label": "📖 DC02: Próximamente", "render": render_DC02},
-                "DC03": {"label": "📖 DC03: Próximamente", "render": render_DC03},
+                "AG01": {"label": "📖 AG01: Próximamente", "render": render_AG01},
+                "AG02": {"label": "📖 AG02: Próximamente", "render": render_AG02},
+                "AG03": {"label": "📖 AG03: Próximamente", "render": render_AG03},
             },
             "Programación": {
-                "DC04": {"label": "📖 DC04: Próximamente", "render": render_DC04},
-                "DC05": {"label": "📖 DC05: Próximamente", "render": render_DC05},
+                "PG01": {"label": "📖 PG01: Próximamente", "render": render_PG01},
+                "PG02": {"label": "📖 PG02: Próximamente", "render": render_PG02},
             },
             "Ejercitación": {
                 "DCE01": {"label": "📝 DCE01: Próximamente", "render": lambda: render_proximamente("DCE01")},
