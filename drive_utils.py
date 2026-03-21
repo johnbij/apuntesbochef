@@ -1,47 +1,68 @@
-import re
+import os
 import streamlit as st
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+from googleapiclient.http import MediaByteArrayUpload
 
+# Configuración de IDs de carpetas en Google Drive
+# Reemplaza los strings de abajo con los IDs reales de tus carpetas de Drive
+FOLDER_IDS = {
+    "ics111": "TU_ID_CARPETA_ICS111",
+    "ics161": "TU_ID_CARPETA_ICS161",
+    "mate10": "TU_ID_CARPETA_MATE10",
+    "apuntesbeuchef": "TU_ID_CARPETA_BEUCHEF", # Nueva carpeta para apuntes
+    "recientes": "TU_ID_CARPETA_RECIENTES"
+}
 
-def extraer_id_drive(url: str) -> str | None:
-    """Extrae el ID de un archivo o carpeta de Google Drive a partir de su URL."""
-    patrones = [
-        r"/file/d/([a-zA-Z0-9_-]+)",
-        r"id=([a-zA-Z0-9_-]+)",
-        r"/folders/([a-zA-Z0-9_-]+)",
-        r"open\?id=([a-zA-Z0-9_-]+)",
-    ]
-    for patron in patrones:
-        match = re.search(patron, url)
-        if match:
-            return match.group(1)
+def get_drive_service():
+    """Autenticación con Google Drive usando Secrets de Streamlit."""
+    try:
+        creds_dict = json.loads(st.secrets["textkey"])
+        creds = service_account.Credentials.from_service_account_info(creds_dict)
+        return build('drive', 'v3', credentials=creds)
+    except Exception as e:
+        st.error(f"Error de autenticación: {e}")
+        return None
+
+def upload_to_drive(file_bytes, file_name, mimetype, folder_name="recientes"):
+    """Sube un archivo a una carpeta específica de Google Drive."""
+    service = get_drive_service()
+    if not service:
+        return False
+    
+    folder_id = FOLDER_IDS.get(folder_name, FOLDER_IDS["recientes"])
+    
+    file_metadata = {
+        'name': file_name,
+        'parents': [folder_id]
+    }
+    
+    media = MediaByteArrayUpload(file_bytes, mimetype=mimetype, resumable=True)
+    
+    try:
+        service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+        return True
+    except Exception as e:
+        st.error(f"Error al subir {file_name}: {e}")
+        return False
+
+def list_drive_uploads(folder_name="recientes"):
+    """Lista los archivos de una carpeta específica."""
+    service = get_drive_service()
+    if not service:
+        return []
+    
+    folder_id = FOLDER_IDS.get(folder_name, FOLDER_IDS["recientes"])
+    query = f"'{folder_id}' in parents and trashed = false"
+    
+    results = service.files().list(q=query, fields="files(id, name, mimeType)").execute()
+    return results.get('files', [])
+
+# Funciones adicionales para galería y audio
+def list_gallery_images():
+    # Lógica para listar imágenes de las carpetas gal_...
+    return []
+
+def fetch_audio_bytes(file_id):
+    # Lógica para descargar audios
     return None
-
-
-def url_directa_imagen(file_id: str) -> str:
-    """Convierte un ID de archivo de Drive en una URL de descarga directa (para imágenes)."""
-    return f"https://drive.google.com/uc?export=view&id={file_id}"
-
-
-def url_preview_pdf(file_id: str) -> str:
-    """Genera la URL de previsualización de un PDF alojado en Google Drive."""
-    return f"https://drive.google.com/file/d/{file_id}/preview"
-
-
-def embed_pdf_drive(url_o_id: str, height: int = 700):
-    """Renderiza un PDF de Google Drive dentro de un iframe de Streamlit."""
-    file_id = extraer_id_drive(url_o_id) if "/" in url_o_id else url_o_id
-    if not file_id:
-        st.error("URL de Google Drive no válida.")
-        return
-    preview_url = url_preview_pdf(file_id)
-    st.components.v1.iframe(preview_url, height=height, scrolling=True)
-
-
-def embed_imagen_drive(url_o_id: str, caption: str = "", use_container_width: bool = True):
-    """Muestra una imagen alojada en Google Drive."""
-    file_id = extraer_id_drive(url_o_id) if "/" in url_o_id else url_o_id
-    if not file_id:
-        st.error("URL de Google Drive no válida.")
-        return
-    img_url = url_directa_imagen(file_id)
-    st.image(img_url, caption=caption, use_container_width=use_container_width)
