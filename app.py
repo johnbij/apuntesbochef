@@ -13,7 +13,7 @@ try:
     from styles import apply_styles
     from utils import mostrar_seccion_ramo 
     from ejercicios_python import EJERCICIOS
-    from pomodoro import POMODORO_HTML
+    from pomodoro import render_pomodoro
     from gallery import render_drive_gallery
 except ImportError as e:
     st.error(f"Error importando módulos: {e}")
@@ -66,7 +66,7 @@ st.markdown(
 # =============================================================================
 # 4. BARRA DE NAVEGACIÓN
 # =============================================================================
-col_nav = st.columns(6)
+col_nav = st.columns(7)
 with col_nav[0]: 
     if st.button("📥 Recientes"): st.session_state.seccion = "recientes"
 with col_nav[1]: 
@@ -79,6 +79,8 @@ with col_nav[4]:
     if st.button("📝 Beuchef"): st.session_state.seccion = "apuntesbeuchef"
 with col_nav[5]: 
     if st.button("🖼️ Galerías"): st.session_state.seccion = "galerias"
+with col_nav[6]: 
+    if st.button("🍅 Pomodoro"): st.session_state.seccion = "pomodoro"
 
 st.write("---")
 
@@ -119,3 +121,7 @@ elif sec in GALLERY_SECTIONS:
     all_imgs = list_gallery_images()
     filtered = [img for img in all_imgs if img.get("folder", "").lower() == course_key]
     render_drive_gallery(filtered, GALLERY_SECTIONS[sec])
+
+# --- POMODORO ---
+elif sec == "pomodoro":
+    render_pomodoro()
