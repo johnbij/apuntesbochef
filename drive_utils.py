@@ -1,6 +1,7 @@
 import os
 import json
 import io
+import re
 import streamlit as st
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
@@ -63,3 +64,27 @@ def fetch_audio_bytes(file_id):
 
 def list_gallery_images():
     return []
+
+def extraer_id_drive(url: str) -> str | None:
+    """
+    Extrae el file_id de una URL de Google Drive.
+    Soporta formatos:
+      - https://drive.google.com/file/d/FILE_ID/view
+      - https://drive.google.com/open?id=FILE_ID
+      - https://drive.google.com/uc?id=FILE_ID
+    """
+    if not url:
+        return None
+    patterns = [
+        r"/file/d/([a-zA-Z0-9_-]+)",
+        r"[?&]id=([a-zA-Z0-9_-]+)",
+    ]
+    for pattern in patterns:
+        match = re.search(pattern, url)
+        if match:
+            return match.group(1)
+    return None
+
+def url_directa_imagen(file_id: str) -> str:
+    """Convierte un file_id de Drive en una URL directa para mostrar imágenes."""
+    return f"https://drive.google.com/uc?export=view&id={file_id}"
